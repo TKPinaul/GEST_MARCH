@@ -1,5 +1,9 @@
-# environnement files
+# environnement virtuel
 env
+
+# variables d'environnement
+.env
 
 # fichier de configuration
 note.txt
+__pycache__/
