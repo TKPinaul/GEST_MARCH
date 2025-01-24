@@ -3,9 +3,12 @@ from pymongo import MongoClient
 
 
 def get_database():
+   """Récupère la base de données"""
+   
    # Récupérer les informations de connexion à la base de données à partir de .env
    uri = config('BDURL')
-   db_name = config('BDNAME')
+   if db_name is None:
+      db_name = config('BDNAME')
 
    # Connexion à la base de données
    client = MongoClient(uri)
