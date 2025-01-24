@@ -1,7 +1,5 @@
 git add .
-
 git commit -m "message"
-
 git push origin dev
 
 base de donnee       dbgtmarch 
@@ -10,3 +8,6 @@ mots pass            fd85jqT6tr3w36UZ
 lien                 mongodb+srv://pktpaulin:fd85jqT6tr3w36UZ@dbgtmarch.w0vo4.mongodb.net/?retryWrites=true&w=majority&appName=dbgtmarch
 
 python -m pip install "pymongo[srv]"
+
+# pour desactiver l'env
+deactivate

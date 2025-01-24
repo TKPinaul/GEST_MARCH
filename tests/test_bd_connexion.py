@@ -1,4 +1,5 @@
 import unittest
+
 from configs.bd_connexion import get_database
 
 class TestDatabaseConnection(unittest.TestCase):
@@ -7,8 +8,7 @@ class TestDatabaseConnection(unittest.TestCase):
       Teste si la connexion à la base de données est réussie
       """
       try:
-         # Récupérer la base de données
-         db = get_database()
+         db = get_database() # Récupérer la base de données
 
          # Vérifie si la connexion est réussie
          collections = db.list_collection_names()
