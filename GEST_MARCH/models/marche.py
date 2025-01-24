@@ -1,4 +1,4 @@
-import random
+import uuid
 
 from configs.bd_connexion import get_database
 
@@ -7,7 +7,7 @@ class Marche:
    
    def __init__(self, x_ligne=50, y_colonne=50, marche_id=None):
       """ Initialisation d'un marché matriciel de taille x_ligne * y_colonne par defaut 50*50 """
-      self.marche_id = marche_id if marche_id else random.randint(1000, 9999) # Générer un id aléatoire si non fourni
+      self.marche_id = marche_id if marche_id else str(uuid.uuid4) # Générer un id aléatoire si non fourni
       self.x_ligne = x_ligne
       self.y_colonne = y_colonne
       
