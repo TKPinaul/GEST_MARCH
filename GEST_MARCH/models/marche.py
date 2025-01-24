@@ -5,9 +5,10 @@ from configs.bd_connexion import get_database
 class Marche:
    """Classe permettant de gérer les marchés"""
    
-   def __init__(self, x_ligne=50, y_colonne=50, marche_id=None):
+   def __init__(self, nom_marche, x_ligne=50, y_colonne=50, marche_id=None):
       """ Initialisation d'un marché matriciel de taille x_ligne * y_colonne par defaut 50*50 """
       self.marche_id = marche_id if marche_id else str(uuid.uuid4) # Générer un id aléatoire si non fourni
+      self.nom_marche = nom_marche
       self.x_ligne = x_ligne
       self.y_colonne = y_colonne
       
@@ -45,6 +46,7 @@ class Marche:
       collection = db['marches'] # Récupérer la collection sinon la créer
       data = {
          'marche_id': self.marche_id,
+         'nom_marche': self.nom_marche,
          'x_ligne': self.x_ligne,
          'y_colonne': self.y_colonne,
          'grille': self.grille
