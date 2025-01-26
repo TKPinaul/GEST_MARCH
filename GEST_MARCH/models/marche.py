@@ -16,16 +16,19 @@ class Marche:
      
    def save(self):
       """Enregistre un marché dans la base de données"""
-      db = get_database()
-      collection = db['marches'] # Récupérer la collection sinon la créer
-      data = {
-         'marche_id': self.marche_id,
-         'nom_marche': self.nom_marche,
-         'x_ligne': self.x_ligne,
-         'y_colonne': self.y_colonne,
-         'grille': self.grille
-      }
-      collection.insert_one(data) # Insérer le marché dans la base de données
+      try:
+         db = get_database()
+         collection = db['marches'] # Récupérer la collection sinon la créer
+         data = {
+            'marche_id': self.marche_id,
+            'nom_marche': self.nom_marche,
+            'x_ligne': self.x_ligne,
+            'y_colonne': self.y_colonne,
+            'grille': self.grille
+         }
+         collection.insert_one(data) # Insérer le marché dans la base de données
+      except Exception as e:
+         raise ValueError(f"Impossible d'enregistrer le marché : {e}")
       
     
    def stand_available(self, x, y):
@@ -54,8 +57,8 @@ class Marche:
    
    def show_grille(self):
       """ Afficher la grille du marché """
-      for stand in self.grille:
-         print(stand)
+      for ligne in self.grille:
+         print(' '.join(['X' if stand else 'O' for stand in ligne]))
          
    
    @staticmethod
@@ -64,5 +67,7 @@ class Marche:
       db = get_database()
       collection = db['marches']
       marche = collection.find_one({'marche_id': marche_id}) # Récupérer le marché
+      if not marche:
+         raise ValueError(f"Aucun marché trouvé avec le code {marche_id}")
       return marche
    
