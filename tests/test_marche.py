@@ -13,7 +13,8 @@ class TestMarche(unittest.TestCase):
    4 - Occuper un stand
    5 - liberer un stand
    6 - visualisation de la grille
-   7 - recuperation d'un marche par son id
+   7 - recuperation de tout les marche
+   8 - recuperation d'un marche par son id
    """
 
    def setUp(self):
@@ -94,7 +95,27 @@ class TestMarche(unittest.TestCase):
       """Teste l'affichage de la grille."""
       self.marche.show_grille()
 
-   #7
+   # 7
+   def test_get_all(self):
+      """Teste la récupération de tout les marchés."""
+      if not self.db is None:
+        self.skipTest("Connexion à la base de données échouée.")
+      
+      # Créer et sauvegarder deux marchés
+      marche1 = Marche(nom_marche="Marché 1", x_ligne=10, y_colonne=10)
+      marche2 = Marche(nom_marche="Marché 2", x_ligne=20, y_colonne=20)
+      marche1.save()
+      marche2.save()
+
+      marches = Marche.get_all() # Récupérer tous les marchés
+      self.assertEqual(len(marches), 2) # Vérifier que deux marchés ont été récupérés
+      
+      # Vérifier les noms des marchés récupérés
+      noms_marches = [marche['nom_marche'] for marche in marches]
+      self.assertIn("Marché 1", noms_marches)
+      self.assertIn("Marché 2", noms_marches)
+   
+   # 8
    def test_get_one(self):
       """Teste la récupération d'un marché par son ID."""
       if not self.db is None:
