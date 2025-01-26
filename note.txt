@@ -11,3 +11,11 @@ python -m pip install "pymongo[srv]"
 
 # pour desactiver l'env
 deactivate
+
+bdgestMarch
+
+# lancer les tests
+python -m unittest tests/test_marche.py
+
+# lancer les tests avec les details
+python -m unittest tests/test_marche.py -v
