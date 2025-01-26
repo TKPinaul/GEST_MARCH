@@ -71,3 +71,10 @@ class Marche:
          raise ValueError(f"Aucun marché trouvé avec le code {marche_id}")
       return marche
    
+   @staticmethod
+   def get_all():
+      """Récupère tous les marchés"""
+      db = get_database()
+      collection = db['marches']
+      marches = collection.find() # Récupérer tous les marchés
+      return marches
