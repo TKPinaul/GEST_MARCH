@@ -66,3 +66,27 @@ class Personne:
       collection = db[collection_name]
       personnes = collection.find() # Récupérer toutes les personnes
       return personnes
+   
+   @staticmethod
+   def get_by_type(collection_name, type_personne):
+      """Récupère toutes les personnes d'un type donné"""
+      db = get_database()
+      collection = db[collection_name]
+      personnes = collection.find({'type_personne': type_personne}) # Récupérer toutes les personnes d'un type donné
+      return personnes
+   
+   @staticmethod
+   def get_by_nom(collection_name, nom):
+      """Récupère toutes les personnes d'un nom donné"""
+      db = get_database()
+      collection = db[collection_name]
+      personnes = collection.find({'nom': nom}) # Récupérer toutes les personnes d'un nom donné
+      return personnes
+   
+   @staticmethod
+   def get_by_contact(collection_name, contact):
+      """Récupère toutes les personnes d'un contact donné"""
+      db = get_database()
+      collection = db[collection_name]
+      personnes = collection.find({'contact': contact}) # Récupérer toutes les personnes d'un contact donné
+      return personnes
