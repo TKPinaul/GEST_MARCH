@@ -8,20 +8,13 @@ class TestDatabaseConnection(unittest.TestCase):
       Teste si la connexion à la base de données est réussie
       """
       try:
-         # Récupérer la base de données
-         db = get_database()
-         
-         # Vérifie si la connexion est réussie
-         collections = db.list_collection_names()
-         
-         print("Connexion reussi")
+         db = get_database() # Récupérer la base de données
+         collections = db.list_collection_names() # Récupérer les collections de la base de données
       except Exception as e:
-         # En cas d'erreur, affichez le message d'erreur
          self.fail(f"La connexion à la base de données a échoué : {e}")
       finally:
          if db is not None:
-            # Fermer la connexion
-            db.client.close()
+            db.client.close() # Fermer la connexion à la base de données
 
 if __name__ == "__main__":
-   unittest.main() 
+   unittest.main() # Exécutez les tests
