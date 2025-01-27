@@ -40,29 +40,29 @@ class TestPersonne(unittest.TestCase):
    # 1
    def test_init(self):
       """Test de l'initialisation"""
-      self.assertEqual(self.personne.nom, "Personne Test")
-      self.assertEqual(self.personne.contact, "00000000")
-      self.assertEqual(self.personne.type_personne, "Client")
-      self.assertIsNotNone(self.personne.code_id) # Vérifier si l'id est généré
+      self.assertEqual(self.personne.nom, "Personne Test", "Le nom de la personne est incorrect.")
+      self.assertEqual(self.personne.contact, "00000000", "Le contact de la personne est incorrect.")
+      self.assertEqual(self.personne.type_personne, "Client", "Le type de personne est incorrect.")
+      self.assertIsNotNone(self.personne.code_id, "L'ID de la personne n'a pas été généré.")
       
    # 2
    def test_save(self):
       """Test d'enregistrement d'une personne"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes') # Enregistrer la personne
       personne_save = self.collection.find_one({'code_id' : self.personne.code_id}) # Récupérer la personne enregistrée
       
-      self.assertIsNotNone(personne_save)
-      self.assertEqual(personne_save['nom'], "Personne Test")
-      self.assertEqual(personne_save['contact'], "00000000")
-      self.assertEqual(personne_save['type_personne'], "Client")
+      self.assertIsNotNone(personne_save, "La personne n'a pas été enregistrée.")
+      self.assertEqual(personne_save['nom'], "Personne Test", "Le nom de la personne enregistrée est incorrect.")
+      self.assertEqual(personne_save['contact'], "00000000", "Le contact de la personne enregistrée est incorrect.")
+      self.assertEqual(personne_save['type_personne'], "Client", "Le type de personne enregistrée est incorrect.")
       
    # 3
    def test_update_personne(self):
       """Test de mise à jour d'une personne"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes') # Enregistrer la personne
@@ -73,84 +73,89 @@ class TestPersonne(unittest.TestCase):
          new_type_personne="Marchand"
       ) # Mettre à jour la personne
       
-      self.assertEqual(data, 1) # Vérifier si la mise à jour a été effectuée
+      self.assertEqual(data, 1, "La mise à jour de la personne a échoué.") # Vérifier si la mise à jour a été effectuée
       personne_updated = self.collection.find_one({'code_id' : self.personne.code_id}) # Récupérer la personne mise à jour
       
-      self.assertIsNotNone(personne_updated) # Vérifier si la personne existe
-      self.assertEqual(personne_updated['nom'], "Personne Test 2") # Vérifier si le nom a été mis à jour
-      self.assertEqual(personne_updated['contact'], "11111111")  # Vérifier si le contact a été mis à jour
-      self.assertEqual(personne_updated['type_personne'], "Fournisseur") # Vérifier si le type de personne a été mis à jour
+      self.assertIsNotNone(personne_updated, "La personne mise à jour n'existe pas.")
+      self.assertEqual(personne_updated['nom'], "Personne Test 2", "Le nom de la personne n'a pas été mis à jour.")
+      self.assertEqual(personne_updated['contact'], "11111111", "Le contact de la personne n'a pas été mis à jour.")
+      self.assertEqual(personne_updated['type_personne'], "Marchand", "Le type de personne n'a pas été mis à jour.")
       
    # 4
    def test_delete_personne(self):
       """Test de suppression d'une personne"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
       data = self.personne.delete_personne('personnes') # Supprimer la personne
       
       personne_deleted = self.collection.find_one({'code_id' : self.personne.code_id}) # Récupérer la personne supprimée
-      self.assertIsNone(personne_deleted) # Vérifier si la personne n'existe plus
+      self.assertIsNone(personne_deleted, "La personne n'a pas été supprimée.")
       
    # 5
    def test_get_one(self):
       """Test de récupération d'une personne par son id"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
       personne = Personne.get_one('personnes', self.personne.code_id) # Récupérer la personne
       
-      self.assertIsNotNone(personne)
-      self.assertEqual(personne['nom'], "Personne Test")
-      self.assertEqual(personne['contact'], "00000000")
-      self.assertEqual(personne['type_personne'], "Client")
+      self.assertIsNotNone(personne, "La personne n'a pas été récupérée.")
+      self.assertEqual(personne['nom'], "Personne Test", "Le nom de la personne récupérée est incorrect.")
+      self.assertEqual(personne['contact'], "00000000", "Le contact de la personne récupérée est incorrect.")
+      self.assertEqual(personne['type_personne'], "Client", "Le type de personne récupérée est incorrect.")
       
    # 6
    def test_get_all(self):
       """Test de récupération de toutes les personnes"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
-      personnes = Personne.get_all('personnes') # Récupérer toutes les personnes
+      personnes = list(Personne.get_all('personnes')) # Récupérer toutes les personnes
       
-      self.assertIsNotNone(personnes)
-      personnes = list(Personne.get_all('personnes'))
-      self.assertEqual(personnes[0]['nom'], "Personne Test")
+      self.assertIsNotNone(personnes, "Aucune personne n'a été récupérée.")
+      self.assertEqual(len(personnes), 1, "Le nombre de personnes récupérées est incorrect.")
+      self.assertEqual(personnes[0]['nom'], "Personne Test", "Le nom de la personne récupérée est incorrect.")
       
    # 7
    def test_get_by_type(self):
       """Test de récupération de toutes les personnes d'un type donné"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
       personnes = Personne.get_by_type('personnes', 'Client') # Récupérer toutes les personnes du type Client
-      self.assertEqual(len(personnes), 1) # Vérifier si une seule personne a été récupérée
+      
+      self.assertEqual(len(personnes), 1, "Le nombre de personnes récupérées est incorrect.")
+      self.assertEqual(personnes[0]['type_personne'], "Client", "Le type de personne récupérée est incorrect.")
       
    # 8
    def test_get_by_nom(self):
       """Test de récupération de toutes les personnes d'un nom donné"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
-      personnes = list(Personne.get_by_nom('personnes', 'Personne Test')) # Récupérer toutes les personnes du nom "Personne Test"
-      self.assertEqual(len(personnes), 1) # Vérifier si une seule personne a été récupérée
-      self.assertEqual(personnes[0]['nom'], "Personne Test") # Vérifier si le nom de la personne est correct
+      personnes = list(Personne.get_by_nom('personnes', 'Personne Test'))
+      
+      self.assertEqual(len(personnes), 1, "Le nombre de personnes récupérées est incorrect.")
+      self.assertEqual(personnes[0]['nom'], "Personne Test", "Le nom de la personne récupérée est incorrect.")
       
    # 9
    def test_get_by_contact(self):
       """Test de récupération de toutes les personnes d'un contact donné"""
-      if not self.db is None:
+      if self.db is None:
          self.skipTest("Connexion à la base de données échouée.")
       
       self.personne.save('personnes')
       personnes = list(Personne.get_by_contact('personnes', '00000000')) # Récupérer toutes les personnes du contact "00000000"
-      self.assertEqual(len(personnes), 1) # Vérifier si une seule personne a été récupérée
-      self.assertEqual(personnes[0]['contact'], "00000000") # Vérifier si le contact de la personne est correct
+      
+      self.assertEqual(len(personnes), 1, "Le nombre de personnes récupérées est incorrect.")
+      self.assertEqual(personnes[0]['contact'], "00000000", "Le contact de la personne récupérée est incorrect.")
+
       
 if __name__ == "__main__":
    unittest.main() # Exécutez les tests
