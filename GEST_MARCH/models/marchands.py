@@ -1,5 +1,6 @@
-from GEST_MARCH.models.personne import Personne
 from configs.bd_connexion import get_database
+from GEST_MARCH.models.personne import Personne
+from pymongo.errors import PyMongoError
 
 
 class Marchands(Personne):
@@ -7,7 +8,7 @@ class Marchands(Personne):
    
    def __init__(self, nom, contact, coordonneeX, coordonneeY, type_personne="Marchand", stock=None, code_id=None):
       """Initialisation d'un marchand"""
-      super().__init__(nom, contact, type_personne, code_id) # Initialisation de la classe parente
+      super().__init__(nom=nom, contact=contact, type_personne=type_personne, code_id=code_id) # Initialisation de la classe parente
       self.coordonneeX = coordonneeX
       self.coordonneeY = coordonneeY
       self.stock = stock if stock is not None else {} # Stock du marchand (dictionnaire)
@@ -26,11 +27,18 @@ class Marchands(Personne):
          'coordonneeY': self.coordonneeY,
          'stock': self.stock
       }
-      collection.insert_one(data) # Insérer le marchand
+      try:
+         collection.insert_one(data) # Insérer le marchand
+      except PyMongoError as e:
+         raise ValueError(f"Impossible d'enregistrer le marchand : {e}")
+      finally:
+         db.client.close()
 
 
    def update_quantite(self, nom_produit, quantite):
       """Met à jour la quantité d'un produit en stock"""
+      if not isinstance(quantite, (int, float)) or quantite < 0:
+         raise ValueError("La quantité doit être un nombre positif")
       if nom_produit in self.stock:
          self.stock[nom_produit]['quantite'] = quantite
       else:
@@ -39,6 +47,8 @@ class Marchands(Personne):
    
    def update_prix(self, nom_produit, prix_unitaire):
       """Met à jour le prix unitaire d'un produit en stock"""
+      if not isinstance(prix_unitaire, (int, float)) or prix_unitaire < 0:
+         raise ValueError("Le prix unitaire doit être un nombre positif")
       if nom_produit in self.stock:
          self.stock[nom_produit]['prix_unitaire'] = prix_unitaire
       else:
@@ -68,9 +78,14 @@ class Marchands(Personne):
       """Supprime un marchand et libère son stand"""
       db = get_database()
       collection = db['marchands']
-      marche.delete_stand(self.coordonneeX, self.coordonneeY) # Libérer le stand
-      result = collection.delete_one({'code_id': self.code_id}) # Supprimer le marchand
-      return result.deleted_count
+      try:
+         marche.free_stand(self.coordonneeX, self.coordonneeY) # Libérer le stand
+         result = collection.delete_one({'code_id': self.code_id}) # Supprimer le marchand
+         return result.deleted_count
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la suppression du marchand : {e}")
+      finally:
+         db.client.close()
       
       
    @staticmethod
@@ -78,13 +93,24 @@ class Marchands(Personne):
       """Récupère un marchand à partir de son code_id"""
       db = get_database()
       collection = db['marchands']
-      marchand = collection.find_one({'code_id': code_id}) # Récupérer le marchand
-      return marchand
+      try:
+         marchand = collection.find_one({'code_id': code_id}) # Récupérer le marchand
+         return marchand
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la récupération du marchand : {e}")
+      finally:
+         db.client.close()
+
    
    @staticmethod
    def get_all():
       """Récupère tous les marchands"""
       db = get_database()
-      collection = db['marchands']
-      marchands = collection.find() # Récupérer tous les marchands
-      return marchands
+      try:
+         collection = db['marchands']
+         marchands = list(collection.find()) # Récupérer tous les marchands
+         return marchands
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la récupération des marchands : {e}")
+      finally:
+         db.client.close()

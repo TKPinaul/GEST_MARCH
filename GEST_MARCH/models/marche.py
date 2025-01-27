@@ -1,12 +1,17 @@
 import uuid
 
 from configs.bd_connexion import get_database
+from pymongo.errors import PyMongoError
+
 
 class Marche:
    """Classe permettant de gérer les marchés"""
    
    def __init__(self, nom_marche, x_ligne=50, y_colonne=50, marche_id=None):
       """ Initialisation d'un marché matriciel de taille x_ligne * y_colonne par defaut 50*50 """
+      if not isinstance(x_ligne, int) or not isinstance(y_colonne, int) or x_ligne <= 0 or y_colonne <= 0:
+         raise ValueError("Les dimensions de la grille doivent être des entiers positifs.")
+      
       self.marche_id = marche_id if marche_id else str(uuid.uuid4()) # Générer un id aléatoire si non fourni
       self.nom_marche = nom_marche
       self.x_ligne = x_ligne
@@ -16,19 +21,21 @@ class Marche:
      
    def save(self):
       """Enregistre un marché dans la base de données"""
+      db = get_database()
+      collection = db['marches'] # Récupérer la collection sinon la créer
+      data = {
+         'marche_id': self.marche_id,
+         'nom_marche': self.nom_marche,
+         'x_ligne': self.x_ligne,
+         'y_colonne': self.y_colonne,
+         'grille': self.grille
+      }
       try:
-         db = get_database()
-         collection = db['marches'] # Récupérer la collection sinon la créer
-         data = {
-            'marche_id': self.marche_id,
-            'nom_marche': self.nom_marche,
-            'x_ligne': self.x_ligne,
-            'y_colonne': self.y_colonne,
-            'grille': self.grille
-         }
          collection.insert_one(data) # Insérer le marché dans la base de données
-      except Exception as e:
-         raise ValueError(f"Impossible d'enregistrer le marché : {e}")
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de l'enregistrement du marché : {e}")
+      finally:
+         db.client.close()
       
     
    def stand_available(self, x, y):
@@ -66,15 +73,26 @@ class Marche:
       """Récupère un marché à partir de son marche_id"""
       db = get_database()
       collection = db['marches']
-      marche = collection.find_one({'marche_id': marche_id}) # Récupérer le marché
-      if not marche:
-         raise ValueError(f"Aucun marché trouvé avec le code {marche_id}")
-      return marche
+      try:
+         marche = collection.find_one({'marche_id': marche_id}) # Récupérer le marché
+         if not marche:
+            raise ValueError(f"Aucun marché trouvé avec le code {marche_id}")
+         return marche
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la récupération du marché : {e}")
+      finally:
+         db.client.close()
+
    
    @staticmethod
    def get_all():
       """Récupère tous les marchés"""
       db = get_database()
       collection = db['marches']
-      marches = collection.find() # Récupérer tous les marchés
-      return marches
+      try:
+         marches = list(collection.find())  # Récupérer tous les marchés
+         return marches
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la récupération des marchés : {e}")
+      finally:
+         db.client.close()
