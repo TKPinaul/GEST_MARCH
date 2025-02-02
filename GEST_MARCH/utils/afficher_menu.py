@@ -4,8 +4,9 @@ def marche_menu():
       === Gestions des Marchés ===
       1. Créer un marché
       2. Afficher tous les marchés
-      3. Afficher la grille d'un marché
-      4. Quitter
+      3. Afficher un marché
+      4. Afficher les stands d'un marché
+      5. Quitter
       """
    )
    
@@ -13,15 +14,14 @@ def marchand_menu():
    print(
       """
       === Gestions des Marchands ===
-      1. Créer un marchand
-      2. Afficher tous les marchands
-      3. Afficher un marchand
-      4. Modifier un marchand
-      5. Supprimer un marchand
-      6. Afficher les marchés
-      7. Afficher la grille d'un marché
-      8. Affecté un marchand a un marché
-      9. Quitter
+      1. Afficher les marchés
+      2. Afficher les stand d'un marché
+      3. Créer un marchand
+      4. Afficher tous les marchands
+      5. Afficher les information d'un marchand
+      6. Modifier un marchand
+      7. Supprimer un marchand
+      8. Quitter
       """
    )
 
