@@ -1,17 +1,9 @@
 from rich import print as rprint
 from rich.console import Console
-from rich.table import Table
-
 from GEST_MARCH.models.marche import Marche
 from GEST_MARCH.utils.afficher_menu import marche_menu
+from GEST_MARCH.utils.table_titre import table_marche_title, table_stand_title
 
-
-def table_title():
-   table = Table(title="Information du marché")
-   table.add_column("ID", style="green", no_wrap=True)
-   table.add_column("NOM", style="blue")
-   table.add_column("Matrice", style="cyan")
-   return table
    
 def gestion_marche():
    console = Console()
@@ -31,7 +23,12 @@ def gestion_marche():
          
       elif choix == "2": # Afficher tous les marchés
          marches = Marche.get_all()
-         table = table_title()
+         
+         if not marches:
+            console.print("[bold red]Aucun marché disponible.[/bold red]", style="bold")
+            continue
+         
+         table = table_marche_title()
          for marche_data in marches:
             marche = Marche.from_dict(marche_data)
             table.add_row(
@@ -46,7 +43,7 @@ def gestion_marche():
          marche_data = Marche.get_one(marche_id)
          if marche_data:
             marche = Marche.from_dict(marche_data)
-            table = table_title()
+            table = table_marche_title()
             table.add_row(
                marche.marche_id,
                marche.nom_marche,
@@ -57,25 +54,24 @@ def gestion_marche():
             rprint("[red]Marché non trouvé[/red]")
       
       elif choix == "4": # Afficher les stands d'un marché
-         marche_id = input("Entrez l'ID du marché : ")
+         marche_id = input("Entrez l'ID du marché: ")
          marche_data = Marche.get_one(marche_id)
-         if marche_data:
-            marche = Marche.from_dict(marche_data)
-            table = Table(title=f"Affichage des Stand du marché {marche.nom_marche}")
-            for i in range(marche.x_ligne):
-               row = []
-               for j in range(marche.y_colonne):
-                  etat_stand = 'X' if marche.grille[i][j] else 'O'
-                  row.append(etat_stand)
-                  table.add_row(
-                     " ".join(row)
-                  )
-            console.print(table)
-         else:
-            rprint("[red]Marché non trouvé[/red]")
+         if not marche_data:
+            console.print("[bold red]ID du marché incorrect.[/bold red]", style="bold")
+            continue
+         
+         marche = Marche.from_dict(marche_data)
+         table = table_stand_title(marche.nom_marche)
+         for x in range(marche.x_ligne):
+            for y in range(marche.y_colonne):
+               statut = "Occupé" if marche.grille[x][y] else "Libre"
+               table.add_row(f"({x}, {y})", statut)
+         console.print(table)
          
       elif choix == "5":
+         console.print("[bold yellow]Merci d'avoir consulté notre service![/bold yellow]", style="bold")
          break
+      
       else:
          rprint("[red]Option invalide, Veuillez réessayer[/red]")
       
