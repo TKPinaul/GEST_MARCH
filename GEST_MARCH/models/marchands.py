@@ -49,6 +49,22 @@ class Marchands(Personne):
       finally:
          db.client.close()
 
+   def update_stock(self):
+      """Mettre a jour le stock d'un marchand"""
+      db = get_database()
+      collection = db['marchands']
+      
+      try:
+         result = collection.update_one(
+            {'code_id': self.code_id},
+            {'$set': {'stock': self.stock}}
+         )
+         return result.modified_count
+      except PyMongoError as e:
+         raise Exception(f"Erreur lors de la mise à jour du stock : {e}")
+      finally:
+         db.client.close()
+
    def update_quantite(self, nom_produit, quantite):
       """Met à jour la quantité d'un produit en stock"""
       if not isinstance(quantite, (int, float)) or quantite < 0:

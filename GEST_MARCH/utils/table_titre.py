@@ -23,3 +23,14 @@ def table_marchand_title():
    table.add_column("MARCHE", style="bright_cyan")
    table.add_column("STOCK", style="orange_red1")
    return table
+
+def table_transactionEntre_title():
+   table = Table(title="Transactions d'entrée")
+   table.add_column("ID TRANSACTION", style="green3", no_wrap=True)
+   table.add_column("ID MARCHAND", style="bright_blue")
+   table.add_column("PRODUIT", style="yellow")
+   table.add_column("QUANTITÉ", style="magenta")
+   table.add_column("PRIX UNITAIRE", style="bright_red")
+   table.add_column("MONTANT TOTAL", style="bright_cyan")
+   table.add_column("DATE", style="orange_red1")
+   return table

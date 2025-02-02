@@ -29,14 +29,16 @@ def transactionEntre_menu():
    print(
    """
    === Gestion des transaction d'entre ===
-   1. Ravitaillement de stock
-   2. Affichage des transactions d'entrée
-   3. Affichage des transaction d'entrée d'un marchand
-   4. Afficher les transaction d'entrée d'un produits
-   5. Afficher les transactions ayant fais l'objet d'un montant minimum
-   6. Afficher les transactions ayant fais l'objet d'un montant maximum
-   7. Afficher les transactions ayant fais l'objet d'un montant (minimum - maximum)
-   8. Quitter
+   0. Afficher la liste des marchands
+   1. Ravitaillement de stock d'un marchand
+   2. Ajoutet un nouveau stock à un marchand
+   3. Affichage des transactions d'entrée
+   4. Affichage des transaction d'entrée d'un marchand
+   5. Afficher les transaction d'entrée d'un produits
+   6. Afficher les transactions ayant fais l'objet d'un montant minimum
+   7. Afficher les transactions ayant fais l'objet d'un montant maximum
+   8. Afficher les transactions ayant fais l'objet d'un montant (minimum - maximum)
+   9. Quitter
    """
    )
 
