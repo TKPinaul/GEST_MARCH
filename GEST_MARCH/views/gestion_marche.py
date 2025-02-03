@@ -1,7 +1,9 @@
+import uuid
 from rich import print as rprint
 from rich.console import Console
 from GEST_MARCH.models.marche import Marche
 from GEST_MARCH.utils.afficher_menu import marche_menu
+from GEST_MARCH.utils.fonction_util import demander_entier
 from GEST_MARCH.utils.table_titre import table_marche_title, table_stand_title
 
    
@@ -15,8 +17,8 @@ def gestion_marche():
       if choix == "1": # Créer un marché
          nom_marche = input("Entrez le nom du marché: ")
          # en absence de coordonne X*Y nous prendrons 50*50
-         x_ligne = int(input("Entrez le nombre de ligne: "))
-         y_colonne = int(input("Entrez le nombre de ligne: "))
+         x_ligne = demander_entier("Entrez le nombre de ligne: ")
+         y_colonne = demander_entier("Entrez le nombre de ligne: ")
          marche = Marche(nom_marche, x_ligne, y_colonne)
          marche.save() # Création du marché
          rprint('[green]Marché créé avec succès![/green]')
@@ -40,33 +42,45 @@ def gestion_marche():
          
       elif choix == "3": # Afficher un marché
          marche_id = input("Entrez l'ID du marché : ")
-         marche_data = Marche.get_one(marche_id)
-         if marche_data:
-            marche = Marche.from_dict(marche_data)
-            table = table_marche_title()
-            table.add_row(
-               marche.marche_id,
-               marche.nom_marche,
-               f"{marche.x_ligne}X{marche.y_colonne}"
-            )
-            console.print(table)
-         else:
-            rprint("[red]Marché non trouvé[/red]")
-      
+         try:
+            uuid.UUID(marche_id) # verifier la validite de l'id
+            marche_data = Marche.get_one(marche_id)
+            if marche_data:
+               marche = Marche.from_dict(marche_data)
+               table = table_marche_title()
+               table.add_row(
+                  marche.marche_id,
+                  marche.nom_marche,
+                  f"{marche.x_ligne}X{marche.y_colonne}"
+               )
+               console.print(table)
+            else:
+               rprint("[red]Marché non trouvé[/red]")
+         except ValueError:
+            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
+             
       elif choix == "4": # Afficher les stands d'un marché
          marche_id = input("Entrez l'ID du marché: ")
-         marche_data = Marche.get_one(marche_id)
-         if not marche_data:
-            console.print("[bold red]ID du marché incorrect.[/bold red]", style="bold")
-            continue
+         try:
+            uuid.UUID(marche_id)
+            
+            marche_data = Marche.get_one(marche_id)
+            if not marche_data:
+               console.print("[bold red]ID du marché incorrect.[/bold red]", style="bold")
+               continue
          
-         marche = Marche.from_dict(marche_data)
-         table = table_stand_title(marche.nom_marche)
-         for x in range(marche.x_ligne):
-            for y in range(marche.y_colonne):
-               statut = "Occupé" if marche.grille[x][y] else "Libre"
-               table.add_row(f"({x}, {y})", statut)
-         console.print(table)
+            marche = Marche.from_dict(marche_data)
+            table = table_stand_title(marche.nom_marche)
+            for x in range(marche.x_ligne):
+               for y in range(marche.y_colonne):
+                  statut = "Occupé" if marche.grille[x][y] else "Libre"
+                  if statut == "Occupé":
+                     table.add_row(f"({x}, {y})", f"[green3]{statut}[/green3]")
+                  else:
+                     table.add_row(f"({x}, {y})", statut)
+            console.print(table)
+         except ValueError:
+            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
          
       elif choix == "5":
          console.print("[bold yellow]Merci d'avoir consulté notre service![/bold yellow]", style="bold")

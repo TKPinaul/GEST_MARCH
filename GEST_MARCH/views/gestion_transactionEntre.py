@@ -1,3 +1,4 @@
+import uuid
 from rich import print as rprint
 from rich.console import Console
 from GEST_MARCH.models.marchands import Marchands
@@ -87,37 +88,43 @@ def gestion_transaction_entree():
 
          table = table_transactionEntre_title()
          for transaction in transactions:
+            montant_total = transaction['montant_total']
             table.add_row(
                transaction['transaction_id'],
                transaction['code_marchand'],
                transaction['nom_produit'],
                str(transaction['quantite_entree']),
                f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
+               f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
                transaction['date_entree']
                )
          console.print(table)
 
       elif choix == "4": # Affichage des transactions d'entrée d'un marchand
          code_marchand = input("Entrez l'ID du marchand: ")
-         transactions = TransactionEntree.get_by_marchand(code_marchand)
+         try:
+            uuid.UUID(code_marchand)
+            transactions = TransactionEntree.get_by_marchand(code_marchand)
 
-         if not transactions:
-            console.print(f"[bold red]Aucune transaction trouvée pour le marchand {code_marchand}.[/bold red]")
-            continue
+            if not transactions:
+               console.print(f"[bold red]Aucune transaction trouvée pour le marchand {code_marchand}.[/bold red]")
+               continue
 
-         table = table_transactionEntre_title()
-         for transaction in transactions:
-            table.add_row(
-               transaction['transaction_id'],
-               transaction['code_marchand'],
-               transaction['nom_produit'],
-               str(transaction['quantite_entree']),
-               f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
-               transaction['date_entree']
-            )
-         console.print(table)
+            table = table_transactionEntre_title()
+            for transaction in transactions:
+               montant_total = transaction['montant_total']
+               table.add_row(
+                  transaction['transaction_id'],
+                  transaction['code_marchand'],
+                  transaction['nom_produit'],
+                  str(transaction['quantite_entree']),
+                  f"{transaction['prix_unitaire']:.2f}",
+                  f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
+                  transaction['date_entree']
+                  )
+            console.print(table)
+         except ValueError:
+            rprint("[red]ID du marchand est invalide. Veuillez entrer id valide (consulter option 0!).[/red]")
 
       elif choix == "5": # Afficher les transactions d'entrée d'un produit
          nom_produit = input("Entrez le nom du produit: ")
@@ -129,15 +136,16 @@ def gestion_transaction_entree():
          
          table = table_transactionEntre_title()
          for transaction in transactions:
+            montant_total = transaction['montant_total']
             table.add_row(
                transaction['transaction_id'],
                transaction['code_marchand'],
                transaction['nom_produit'],
                str(transaction['quantite_entree']),
                f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
+               f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
                transaction['date_entree']
-            )
+               )
          console.print(table)
 
       elif choix == "6": # Afficher les transactions ayant fait l'objet d'un montant minimum
@@ -150,15 +158,16 @@ def gestion_transaction_entree():
          
          table = table_transactionEntre_title()
          for transaction in transactions:
+            montant_total = transaction['montant_total']
             table.add_row(
                transaction['transaction_id'],
                transaction['code_marchand'],
                transaction['nom_produit'],
                str(transaction['quantite_entree']),
                f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
+               f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
                transaction['date_entree']
-            )
+               )
          console.print(table)
 
       elif choix == "7": # Afficher les transactions ayant fait l'objet d'un montant maximum
@@ -171,15 +180,16 @@ def gestion_transaction_entree():
          
          table = table_transactionEntre_title()
          for transaction in transactions:
+            montant_total = transaction['montant_total']
             table.add_row(
                transaction['transaction_id'],
                transaction['code_marchand'],
                transaction['nom_produit'],
                str(transaction['quantite_entree']),
                f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
+               f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
                transaction['date_entree']
-            )
+               )
          console.print(table)
 
       elif choix == "8": # Afficher les transactions ayant fait l'objet d'un montant (minimum - maximum)
@@ -193,15 +203,16 @@ def gestion_transaction_entree():
          
          table = table_transactionEntre_title()
          for transaction in transactions:
+            montant_total = transaction['montant_total']
             table.add_row(
                transaction['transaction_id'],
                transaction['code_marchand'],
                transaction['nom_produit'],
                str(transaction['quantite_entree']),
                f"{transaction['prix_unitaire']:.2f}",
-               f"{transaction['montant_total']:.2f}",
+               f"{montant_total:.2f}" if montant_total is not None else "[blod red3]N/A[/blod red3]",
                transaction['date_entree']
-            )
+               )
          console.print(table)
 
       elif choix == "9": # Quitter
@@ -209,4 +220,4 @@ def gestion_transaction_entree():
          break
       
       else:
-         print("Option invalide, veuillez réessayer.")
+         rprint("[bold yellow]Option invalide, veuillez réessayer.[/bold yellow]")

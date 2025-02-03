@@ -116,5 +116,3 @@ class TransactionEntree:
       db = get_database()
       collection = db['transactions_entrees']
       return list(collection.find({'montant_total': {'$gte': montant_min, '$lte': montant_max}}))
-
-

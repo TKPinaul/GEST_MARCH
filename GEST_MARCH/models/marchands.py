@@ -132,7 +132,7 @@ class Marchands(Personne):
          raise Exception(f"Erreur lors de la récupération des marchands : {e}")
       finally:
          db.client.close()
-         
+      
    @staticmethod
    def from_dict(data):
       """Recrée une instance Marchands à partir d'un dictionnaire"""

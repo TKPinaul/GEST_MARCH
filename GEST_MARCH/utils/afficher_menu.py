@@ -19,9 +19,10 @@ def marchand_menu():
       3. Créer un marchand
       4. Afficher tous les marchands
       5. Afficher les information d'un marchand
-      6. Modifier un marchand
-      7. Supprimer un marchand
-      8. Quitter
+      6. Afficher les stocks d'un marchand
+      7. Modifier un marchand
+      8. Supprimer un marchand
+      9. Quitter
       """
    )
 

@@ -6,14 +6,14 @@ from rich import print as rprint
 
 def main():
    while True:
-      print("\n=== Menu Principal ===")
+      rprint("\n=== Menu Principal ===")
       print("1. Gestion des Marchés")
       print("2. Gestion des Marchands")
-      print("3. Gestion des Transactions d'Entrée")
-      print("4. Gestion des Transactions de Sortie")
+      print("3. Gestion des Transactions d'Entrée (rentre de stock)")
+      print("4. Gestion des Transactions de Sortie (sorties de stock)")
       print("5. Quitter")
 
-      choix = input("Choisissez une option: ")
+      choix = input("\nChoisissez une option: ")
 
       if choix == "1":
          gestion_marche()
@@ -24,7 +24,7 @@ def main():
       elif choix == "4":
          gestion_transaction_sortie()
       elif choix == "5":
-         rprint("[bold yellow]Au revoir et à bientôt![/bold yellow]")
+         rprint("[bold yellow]Au revoir et à bientôt![/bold yellow]\n")
          break
       else:
          rprint("[bold red]Option invalide, veuillez réessayer.[/bold red]")
