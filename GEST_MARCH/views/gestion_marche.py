@@ -15,16 +15,7 @@ def gestion_marche():
       marche_menu()
       choix = input("Choisisser une option: ")
       
-      if choix == "1": # Créer un marché
-         nom_marche = input("Entrez le nom du marché: ")
-         # en absence de coordonne X*Y nous prendrons 50*50
-         x_ligne = demander_entier("Entrez le nombre de ligne: ")
-         y_colonne = demander_entier("Entrez le nombre de ligne: ")
-         marche = Marche(nom_marche, x_ligne, y_colonne)
-         marche.save() # Création du marché
-         rprint('[green]Marché créé avec succès![/green]')
-         
-      elif choix == "2": # Afficher tous les marchés
+      if choix == "0": # Afficher tous les marchés
          marches = Marche.get_all()
          
          if not marches:
@@ -41,7 +32,7 @@ def gestion_marche():
             )
          console.print(table)
          
-      elif choix == "3": # Afficher un marché
+      elif choix == "1": # Afficher un marché
          marche_id = input("Entrez l'ID du marché : ")
          try:
             uuid.UUID(marche_id) # verifier la validite de l'id
@@ -60,7 +51,7 @@ def gestion_marche():
          except ValueError:
             rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
              
-      elif choix == "4": # Afficher les stands d'un marché
+      elif choix == "2": # Afficher les stands d'un marché
          marche_id = input("Entrez l'ID du marché: ")
          try:
             uuid.UUID(marche_id)
@@ -75,7 +66,7 @@ def gestion_marche():
          except ValueError:
             rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
          
-      elif choix == "5":
+      elif choix == "3": # Quitter
          console.print("[bold yellow]Merci d'avoir consulté notre service![/bold yellow]", style="bold")
          break
       

@@ -16,7 +16,7 @@ def gestion_marchand():
       marchand_menu()
       choix = input("Choisisser une option: ")
       
-      if choix == "1": # Afficher tous les marchés
+      if choix == "0": # Afficher tous les marchés
          marches = Marche.get_all()
          
          if not marches:
@@ -33,7 +33,7 @@ def gestion_marchand():
             )
          console.print(table)
       
-      elif choix == "2": # Afficher les stand d'un marché
+      elif choix == "1": # Afficher les stand d'un marché
          marche_id = input("Entrez l'ID du marché: ")
          try:
             uuid.UUID(marche_id)
@@ -46,72 +46,9 @@ def gestion_marchand():
             marche = Marche.from_dict(marche_data)
             afficher_marche(marche)
          except ValueError:
-            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 1!).[/red]")
-         
-      elif choix == "3": # Créer un marchand
-         try:
-            marche_id = input("Entrez l'ID du marché où le marchand sera installé: ")
-            
-            try:
-               uuid.UUID(marche_id)
-               nom = input("Entrez le nom du marchand: ")
-               contact = input("Entrez le contact du marchand: ")
-               coordonneeX = demander_entier("Entrez la coordonnée X: ")
-               coordonneeY = demander_entier("Entrez la coordonnée Y: ")
-            
-               stock = {} # initialisation du stock
-               while True:
-                  response = input("Ajouter du stock ? (O/N): ").strip().upper()
-                  if response in ["O", "N"]:
-                     break
-                  rprint("[yellow]Veuillez entrer uniquement 'O' pour Oui ou 'N' pour Non.[/yellow]")
-                  
-               while response == "O":
-                  produit = input("Entrez le nom du produits: ").strip()
-                  quantite = int(input("Quantiter totale a enregistrer: "))
-                  prix_unitaire = float(input("Quel est le prix unitaire de ce produits: "))
-                  
-                  stock[produit] = {
-                     'quantite': quantite,
-                     'prix_unitaire': prix_unitaire
-                  } # Ajout du produitts au stock
-                  while True:
-                     response = input("Ajouter du stock ? (O/N): ").strip().upper()
-                     if response in ["O", "N"]:
-                        break
-                     rprint("[yellow]Veuillez entrer uniquement 'O' pour Oui ou 'N' pour Non.[/yellow]")
-               
-               marche_data = Marche.get_one(marche_id) # recupération du marché par son ID
-               if not marche_data: # Vérifi si le marché a été récupéré
-                  console.print("[bold red]Marché non trouvé, veuiller consulter le choix '1'.[/bold red]", style="bold")
-                  continue
-               
-               marche = Marche.from_dict(marche_data) # Créer une instance de Marche à partir des données récupérées
-               
-               # verification de la disponibilite du stand
-               if not marche.stand_available(coordonneeX, coordonneeY):
-                  console.print(f"[bold red]Le stand ({coordonneeX}, {coordonneeY}) est déjà occupé ou hors de la grille.[/bold red]", style="bold")
-                  continue
-               
-               marchand = Marchands(
-                  nom=nom,
-                  contact=contact,
-                  coordonneeX=coordonneeX,
-                  coordonneeY=coordonneeY,
-                  stock=stock
-               )
-               marchand.save(marche_id) # Enregistrement du marchand
-               console.print("[bold green]Marchand créé avec succès![/bold green]", style="bold")
-            
-            except ValueError:
-               rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 1!).[/red]")
-
-         except ValueError as e:
-            console.print(f"[bold red]Erreur: {e}[/bold red]", style="bold")
-         except Exception as e:
-            console.print(f"[bold red]Erreur inattendue : {e}[/bold red]", style="bold")
-            
-      elif choix == "4": # Afficher tous les marchands
+            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
+  
+      elif choix == "2": # Afficher tous les marchands
          marchands = Marchands.get_all()
          
          if not marchands:
@@ -143,7 +80,7 @@ def gestion_marchand():
             )
          console.print(table)
           
-      elif choix == "5": # Afficher les informations d'un marchand
+      elif choix == "3": # Afficher les informations d'un marchand
          code_id = input("Entrez l'ID du marchand: ")
          try:
             uuid.UUID(code_id)
@@ -176,7 +113,7 @@ def gestion_marchand():
          except ValueError:
             rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 4!).[/red]")
             
-      elif choix == "6": # Afficher les stock d'un marchand
+      elif choix == "4": # Afficher les stock d'un marchand
          code_id = input("Entrez l'ID du marchand: ")
          try:
             uuid.UUID(code_id)
@@ -202,7 +139,7 @@ def gestion_marchand():
          except ValueError:
             rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 4!).[/red]")
       
-      elif choix == "7": # Modifier les informations d'un marchand
+      elif choix == "5": # Modifier les informations d'un marchand
          code_id = input("Entrez l'ID du marchand à modifier: ")
          
          try:
@@ -228,7 +165,7 @@ def gestion_marchand():
          except ValueError:
             rprint("[red]ID du marchAND est invalide. Veuillez entrer id valide (consulter option 4!).[/red]")
             
-      elif choix == "8": # Supprimer un marchand
+      elif choix == "6": # Supprimer un marchand
          code_id = input("Entrez l'ID du marchand à supprimer: ")
          marchand_data = Marchands.get_one(code_id)
          
@@ -254,7 +191,7 @@ def gestion_marchand():
          except Exception as e:
             console.print(f"[bold red]Erreur: {e}[/bold red]", style="bold")
          
-      elif choix == "9": # Quitter
+      elif choix == "7": # Quitter
          console.print("[bold yellow]Merci d'avoir consulté notre service![/bold yellow]", style="bold")
          break
       

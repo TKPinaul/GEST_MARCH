@@ -1,12 +1,28 @@
+def users_menu():
+   print(
+      """
+      === Gestion des utilisateurs ===
+      0. Créer un utilisateur
+      1. Créer un marché
+      2. Créer un marchand
+      3. Afficher tous les marchés
+      4. Afficher les stands d'un marché
+      5. Afficher tous les utilisateurs
+      6. Afficher tous les marchands
+      7. Afficher tous les clients
+      8. Afficher les admin du système
+      9. Quitter
+      """
+   )
+
 def marche_menu():
    print(
       """
       === Gestions des Marchés ===
-      1. Créer un marché
-      2. Afficher tous les marchés
-      3. Afficher un marché
-      4. Afficher les stands d'un marché
-      5. Quitter
+      0. Afficher tous les marchés
+      1. Afficher un marché
+      2. Afficher les stands d'un marché
+      3. Quitter
       """
    )
    
@@ -14,15 +30,14 @@ def marchand_menu():
    print(
       """
       === Gestions des Marchands ===
-      1. Afficher les marchés
-      2. Afficher les stand d'un marché
-      3. Créer un marchand
-      4. Afficher tous les marchands
-      5. Afficher les information d'un marchand
-      6. Afficher les stocks d'un marchand
-      7. Modifier un marchand
-      8. Supprimer un marchand
-      9. Quitter
+      0. Afficher les marchés
+      1. Afficher les stand d'un marché
+      2. Afficher tous les marchands
+      3. Afficher les information d'un marchand
+      4. Afficher les stocks d'un marchand
+      5. Modifier un marchand
+      6. Supprimer un marchand
+      7. Quitter
       """
    )
 

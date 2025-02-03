@@ -1,0 +1,12 @@
+
+ID:            1aaa7468-ddc1-492e-8db0-19dc26b29272
+nom:           TIGER Jean
+type_personne: Admin
+pass:          admin
+
+------------------------
+
+ID:            237b932d-4381-40e2-87be-5cd3129dcb19
+nom:           KISSO Daniel
+type_personne: Client
+pass:          kisso
