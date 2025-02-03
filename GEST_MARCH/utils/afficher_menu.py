@@ -47,7 +47,8 @@ def transactionSortie_menu():
    print(
    """
    === Gestion des transaction d'entre ===
-   1. Vendre produit
+   0. Afficher la liste des marchands
+   1. Vendre un produit
    2. Affichage des transactions de sorties
    3. Affichage des transactions de sorties d'un marchand
    4. Afficher les transactions d'entrée d'un produits

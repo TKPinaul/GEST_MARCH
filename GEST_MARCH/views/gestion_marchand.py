@@ -4,6 +4,7 @@ from rich.console import Console
 from GEST_MARCH.models.marchands import Marchands
 from GEST_MARCH.models.marche import Marche
 from GEST_MARCH.utils.afficher_menu import marchand_menu
+from GEST_MARCH.utils.afficher_stand import afficher_marche
 from GEST_MARCH.utils.fonction_util import demander_entier
 from GEST_MARCH.utils.table_titre import table_marchand_title, table_marche_title, table_stand_title, table_stock_title
    
@@ -43,15 +44,7 @@ def gestion_marchand():
                continue
          
             marche = Marche.from_dict(marche_data)
-            table = table_stand_title(marche.nom_marche)
-            for x in range(marche.x_ligne):
-               for y in range(marche.y_colonne):
-                  statut = "Occupé" if marche.grille[x][y] else "Libre"
-                  if statut == "Occupé":
-                     table.add_row(f"({x}, {y})", f"[green3]{statut}[/green3]")
-                  else:
-                     table.add_row(f"({x}, {y})", statut)
-            console.print(table)
+            afficher_marche(marche)
          except ValueError:
             rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 1!).[/red]")
          
