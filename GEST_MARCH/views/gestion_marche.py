@@ -33,7 +33,7 @@ def gestion_marche():
          console.print(table)
          
       elif choix == "1": # Afficher un marché
-         marche_id = input("Entrez l'ID du marché : ")
+         marche_id = input("Entrez l'ID du marché : ").strip()
          try:
             uuid.UUID(marche_id) # verifier la validite de l'id
             marche_data = Marche.get_one(marche_id)
@@ -49,10 +49,10 @@ def gestion_marche():
             else:
                rprint("[red]Marché non trouvé[/red]")
          except ValueError:
-            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
+            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 0!).[/red]")
              
       elif choix == "2": # Afficher les stands d'un marché
-         marche_id = input("Entrez l'ID du marché: ")
+         marche_id = input("Entrez l'ID du marché: ").strip()
          try:
             uuid.UUID(marche_id)
             
@@ -64,7 +64,7 @@ def gestion_marche():
             marche = Marche.from_dict(marche_data)
             afficher_marche(marche)
          except ValueError:
-            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 2!).[/red]")
+            rprint("[red]ID du marché est invalide. Veuillez entrer id valide (consulter option 0!).[/red]")
          
       elif choix == "3": # Quitter
          console.print("[bold yellow]Merci d'avoir consulté notre service![/bold yellow]", style="bold")

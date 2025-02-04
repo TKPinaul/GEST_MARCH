@@ -1,7 +1,5 @@
 import datetime
 import uuid
-
-from GEST_MARCH.models.marchands import Marchands
 from configs.bd_connexion import get_database
 
 
@@ -56,7 +54,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find() # Récupérer toutes les transactions de sortie
+      transactions = list(collection.find()) # Récupérer toutes les transactions de sortie
       return transactions
    
    
@@ -73,7 +71,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un marchand"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'code_marchand': code_marchand}) # Récupérer les transactions de sortie du marchand
+      transactions = list(collection.find({'code_marchand': code_marchand})) # Récupérer les transactions de sortie du marchand
       return transactions
    
    @staticmethod
@@ -81,7 +79,7 @@ class TransactionClient:
       """Récupère toutes les transactions d'achat d'un client"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'code_client': code_client}) # Récupérer les transactions de sortie d'un client
+      transactions = list(collection.find({'code_client': code_client})) # Récupérer les transactions de sortie d'un client
       return transactions
    
    @staticmethod
@@ -99,7 +97,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un produit donné"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'nom_produit': nom_produit}) # Récupérer les transactions de sortie du produit donné
+      transactions = list(collection.find({'nom_produit': nom_produit})) # Récupérer les transactions de sortie du produit donné
       return transactions
    
    @staticmethod
@@ -107,7 +105,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un montant total donné"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'montant_total': montant_total}) # Récupérer les transactions de sortie du montant total donné
+      transactions = list(collection.find({'montant_total': montant_total})) # Récupérer les transactions de sortie du montant total donné
       return transactions
    
    
@@ -116,7 +114,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un montant total supérieur ou égal à montant_min"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'montant_total': {'$gte': montant_min}}) # Récupérer les transactions de sortie du montant total supérieur ou égal à montant_min
+      transactions = list(collection.find({'montant_total': {'$gte': montant_min}})) # Récupérer les transactions de sortie du montant total supérieur ou égal à montant_min
       return transactions
    
    
@@ -125,7 +123,7 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un montant total inférieur ou égal à montant_max"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'montant_total': {'$lte': montant_max}}) # Récupérer les transactions de sortie du montant total inférieur ou égal à montant_max
+      transactions = list(collection.find({'montant_total': {'$lte': montant_max}})) # Récupérer les transactions de sortie du montant total inférieur ou égal à montant_max
       return transactions
    
    
@@ -134,6 +132,6 @@ class TransactionClient:
       """Récupère toutes les transactions de sortie d'un montant total compris entre montant_min et montant_max"""
       db = get_database()
       collection = db['transactions_clients']
-      transactions = collection.find({'montant_total': {'$gte': montant_min, '$lte': montant_max}}) # Récupérer les transactions de sortie du montant total compris entre montant_min et montant_max
+      transactions = list(collection.find({'montant_total': {'$gte': montant_min, '$lte': montant_max}})) # Récupérer les transactions de sortie du montant total compris entre montant_min et montant_max
       return transactions
      

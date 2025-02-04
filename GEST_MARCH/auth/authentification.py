@@ -40,7 +40,7 @@ def inscription():
 def connexion():
    """Phase de connexion"""
    essais_restants = 3
-   nom = input("Entreez votre nom et prenom : ").strip()
+   nom = input("Entreez votre nom de compte : ").strip()
    
    try:
       personne_data = Personne.get_by_nom("personnes", nom)

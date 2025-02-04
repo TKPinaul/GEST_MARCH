@@ -5,6 +5,7 @@ from GEST_MARCH.models.marchands import Marchands
 from GEST_MARCH.models.marche import Marche
 from GEST_MARCH.models.transactionEntre import TransactionEntree
 from GEST_MARCH.utils.afficher_menu import transactionEntre_menu
+from GEST_MARCH.utils.fonction_util import demander_entier, demander_reel
 from GEST_MARCH.utils.table_titre import table_marchand_title, table_transactionEntre_title
 
 
@@ -55,9 +56,9 @@ def gestion_transaction_entree():
          console.print(table)
 
       elif choix == "1": # Ravitaillement de stock d'un produit
-         code_marchand = input("Entrez l'ID du marchand: ")
-         nom_produit = input("Entrez le nom du produit: ")
-         quantite_entree = int(input("Entrez la quantité: "))
+         code_marchand = input("Entrez l'ID du marchand: ").strip()
+         nom_produit = input("Entrez le nom du produit: ").strip()
+         quantite_entree = demander_entier("Entrez la quantité: ")
 
          transaction = TransactionEntree(code_marchand, nom_produit, quantite_entree)
          try:
@@ -67,10 +68,10 @@ def gestion_transaction_entree():
             print(f"Erreur: {e}")
 
       elif choix == "2": # Ajout d'un nouveau stock à un marchand
-         code_marchand = input("Entrez l'ID du marchand: ")
-         nom_produit = input("Entrez le nom du produit: ")
-         quantite_entree = int(input("Entrez la quantité: "))
-         prix_unitaire = float(input("Entrez le prix unitaire: "))
+         code_marchand = input("Entrez l'ID du marchand: ").strip()
+         nom_produit = input("Entrez le nom du produit: ").strip().capitalize()
+         quantite_entree = demander_entier("Entrez la quantité: ")
+         prix_unitaire = demander_reel("Entrez le prix unitaire: ")
 
          transaction = TransactionEntree(code_marchand, nom_produit, quantite_entree, prix_unitaire)
          try:
@@ -101,7 +102,7 @@ def gestion_transaction_entree():
          console.print(table)
 
       elif choix == "4": # Affichage des transactions d'entrée d'un marchand
-         code_marchand = input("Entrez l'ID du marchand: ")
+         code_marchand = input("Entrez l'ID du marchand: ").strip()
          try:
             uuid.UUID(code_marchand)
             transactions = TransactionEntree.get_by_marchand(code_marchand)
@@ -127,7 +128,7 @@ def gestion_transaction_entree():
             rprint("[red]ID du marchand est invalide. Veuillez entrer id valide (consulter option 0!).[/red]")
 
       elif choix == "5": # Afficher les transactions d'entrée d'un produit
-         nom_produit = input("Entrez le nom du produit: ")
+         nom_produit = input("Entrez le nom du produit: ").strip()
          transactions = TransactionEntree.get_by_produit(nom_produit)
          
          if not transactions:
@@ -149,7 +150,7 @@ def gestion_transaction_entree():
          console.print(table)
 
       elif choix == "6": # Afficher les transactions ayant fait l'objet d'un montant minimum
-         montant_min = float(input("Entrez le montant minimum: "))
+         montant_min = demander_reel("Entrez le montant minimum: ")
          transactions = TransactionEntree.get_by_montant_min(montant_min)
          
          if not transactions:
@@ -171,7 +172,7 @@ def gestion_transaction_entree():
          console.print(table)
 
       elif choix == "7": # Afficher les transactions ayant fait l'objet d'un montant maximum
-         montant_max = float(input("Entrez le montant maximum: "))
+         montant_max = demander_reel("Entrez le montant maximum: ")
          transactions = TransactionEntree.get_by_montant_max(montant_max)
          
          if not transactions:
@@ -193,8 +194,8 @@ def gestion_transaction_entree():
          console.print(table)
 
       elif choix == "8": # Afficher les transactions ayant fait l'objet d'un montant (minimum - maximum)
-         montant_min = float(input("Entrez le montant minimum: "))
-         montant_max = float(input("Entrez le montant maximum: "))
+         montant_min = demander_reel("Entrez le montant minimum: ")
+         montant_max = demander_reel("Entrez le montant maximum: ")
          transactions = TransactionEntree.get_by_montant_interval(montant_min, montant_max)
          
          if not transactions:

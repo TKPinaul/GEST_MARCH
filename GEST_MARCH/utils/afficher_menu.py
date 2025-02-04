@@ -3,7 +3,7 @@ from rich import print as rprint
 def welcome_menu():
    rprint(
    """
-   === Bienvenue ! Que puis-je faire pour vous ? ===
+   [bold yellow]=== Bienvenue ! Que puis-je faire pour vous ? ===[/bold yellow]
    
    0. Je suis un marchand
    1. Je souhaite m'enregistrer en tant que client
@@ -13,13 +13,12 @@ def welcome_menu():
    
 def section_menu(type_personne):
    """Affiche le menu en fonction du type d'utilisateur."""
-   print(f"""
-      === Menu Principal ({type_personne})===""")
+   rprint(f"""
+      [bold cyan]=== Menu Principal ({type_personne})===[/bold cyan]""")
    
    if type_personne == "Admin":
       print(
-      """
-      0. Gestion des Utilisateurs
+      """      0. Gestion des Utilisateurs
       1. Accéder aux Marchés
       2. Accéder aux fonctionnalités Marchand
       3. Gestion des Transactions d'Entrée (rentrée de stock)
@@ -40,9 +39,9 @@ def section_menu(type_personne):
    
 
 def users_menu():
-   print(
+   rprint(
       """
-      === Gestion des utilisateurs ===
+      [bold yellow]=== Gestion des utilisateurs ===[/bold yellow]
       0. Créer un utilisateur
       1. Créer un marché
       2. Créer un marchand
@@ -57,9 +56,9 @@ def users_menu():
    )
 
 def marche_menu():
-   print(
+   rprint(
       """
-      === Gestions des Marchés ===
+      [bold blue]=== Gestions des Marchés ===[/bold blue]
       0. Afficher tous les marchés
       1. Afficher un marché
       2. Afficher les stands d'un marché
@@ -68,9 +67,9 @@ def marche_menu():
    )
    
 def marchand_menu():
-   print(
+   rprint(
       """
-      === Gestions des Marchands ===
+      [bold bright_cyan]=== Gestions des Marchands ===[/bold bright_cyan]
       0. Afficher les marchés
       1. Afficher les stand d'un marché
       2. Afficher tous les marchands
@@ -85,7 +84,7 @@ def marchand_menu():
 def transactionEntre_menu():
    print(
    """
-   === Gestion des transaction d'entre ===
+   [bold green]=== Gestion des transaction d'entre ===[bold green]
    0. Afficher la liste des marchands
    1. Ravitaillement de stock d'un marchand
    2. Ajoutet un nouveau stock à un marchand
@@ -100,9 +99,9 @@ def transactionEntre_menu():
    )
 
 def client_menu():
-   print(
+   rprint(
    """
-   === Gestion des transaction d'entre ===
+   [bold orange_red1]=== Gestion des transaction d'entre ===[/bold orange_red1]
    0. Afficher la liste des marchands
    1. Afficher les produits d'un marchants
    2. Rechercher une liste de produit
@@ -114,15 +113,16 @@ def client_menu():
 def transactionSortie_menu():
    print(
    """
-   === Gestion des transaction d'entre ===
+   [bold magenta]=== Gestion des transaction d'entre ===[bold magenta]
    0. Afficher la liste des marchands
-   1. Afficher des transactions de sorties
-   2. Afficher les transaction d'un client
-   3. Afficher des transactions de sorties d'un marchand
-   4. Afficher les transactions d'entrée d'un produits
-   5. Afficher les transactions ayant fais l'objet d'un montant minimum
-   6. Afficher les transactions ayant fais l'objet d'un montant maximum
-   7. Afficher les transactions ayant fais l'objet d'un montant (minimum - maximum)
-   8. Quitter
+   1. Afficher la liste des clients
+   2. Afficher les transactions de sorties
+   3. Afficher les transaction d'un client
+   4. Afficher des transactions de sorties d'un marchand
+   5. Afficher les transactions de sortie d'un produit
+   6. Afficher les transactions ayant fais l'objet d'un montant minimum
+   7. Afficher les transactions ayant fais l'objet d'un montant maximum
+   8. Afficher les transactions ayant fais l'objet d'un montant (minimum - maximum)
+   9. Quitter
    """
    )

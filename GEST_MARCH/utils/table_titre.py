@@ -39,7 +39,7 @@ def table_stock_title(nom_marchand):
 
 # Affichage des information de transaction (entre en stock)
 def table_transactionEntre_title():
-   table = Table(title="Transactions d'entrée")
+   table = Table(title="Transactions d'entrée en stock")
    table.add_column("ID TRANSACTION", style="green3", no_wrap=True)
    table.add_column("ID MARCHAND", style="bright_blue")
    table.add_column("PRODUIT", style="yellow")
@@ -47,6 +47,19 @@ def table_transactionEntre_title():
    table.add_column("PRIX UNITAIRE", style="bright_red")
    table.add_column("MONTANT TOTAL", style="bright_cyan")
    table.add_column("DATE", style="orange_red1")
+   return table
+
+# Affichage des information de transaction (sortie de stock)
+def table_transactionSortie_title():
+   table = Table(title="Transactions de sortie de stock")
+   table.add_column("ID TRANSACTION", style="cyan", no_wrap=True)
+   table.add_column("ID MARCHAND", style="blue")
+   table.add_column("PRODUIT", style="yellow")
+   table.add_column("QUANTITÉ", style="green")
+   table.add_column("PRIX UNITAIRE", style="bright_magenta")
+   table.add_column("MONTANT TOTAL", style="red")
+   table.add_column("ID CLIENT", style="blue")
+   table.add_column("DATE", style="white")
    return table
 
 # Affichage des information d'utilisateur (personnes)

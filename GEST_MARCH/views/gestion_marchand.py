@@ -34,7 +34,7 @@ def gestion_marchand():
          console.print(table)
       
       elif choix == "1": # Afficher les stand d'un marché
-         marche_id = input("Entrez l'ID du marché: ")
+         marche_id = input("Entrez l'ID du marché: ").strip()
          try:
             uuid.UUID(marche_id)
             
@@ -81,7 +81,7 @@ def gestion_marchand():
          console.print(table)
           
       elif choix == "3": # Afficher les informations d'un marchand
-         code_id = input("Entrez l'ID du marchand: ")
+         code_id = input("Entrez l'ID du marchand: ").strip()
          try:
             uuid.UUID(code_id)
             marchand = Marchands.get_one(code_id)
@@ -111,10 +111,10 @@ def gestion_marchand():
             console.print(table)
             
          except ValueError:
-            rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 4!).[/red]")
+            rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 2!).[/red]")
             
       elif choix == "4": # Afficher les stock d'un marchand
-         code_id = input("Entrez l'ID du marchand: ")
+         code_id = input("Entrez l'ID du marchand: ").strip()
          try:
             uuid.UUID(code_id)
             marchand = Marchands.get_one(code_id)
@@ -140,7 +140,7 @@ def gestion_marchand():
             rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 2!).[/red]")
       
       elif choix == "5": # Modifier les informations d'un marchand
-         code_id = input("Entrez l'ID du marchand à modifier: ")
+         code_id = input("Entrez l'ID du marchand à modifier: ").strip()
          
          try:
             uuid.UUID(code_id)
@@ -166,7 +166,7 @@ def gestion_marchand():
             rprint("[red]ID du marchAND est invalide. Veuillez entrer id valide (consulter option 4!).[/red]")
             
       elif choix == "6": # Supprimer un marchand
-         code_id = input("Entrez l'ID du marchand à supprimer: ")
+         code_id = input("Entrez l'ID du marchand à supprimer: ").strip
          marchand_data = Marchands.get_one(code_id)
          
          if not marchand_data:

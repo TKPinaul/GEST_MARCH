@@ -71,6 +71,7 @@ class Marchands(Personne):
          raise ValueError("La quantité doit être un nombre positif")
       if nom_produit in self.stock:
          self.stock[nom_produit]['quantite'] = quantite
+         self.update_stock()
       else:
          raise ValueError(f"Le produit {nom_produit} n'existe pas dans le stock")
    

@@ -6,7 +6,7 @@ from GEST_MARCH.models.marche import Marche
 from GEST_MARCH.models.personne import Personne
 from GEST_MARCH.utils.afficher_menu import users_menu
 from GEST_MARCH.utils.afficher_stand import afficher_marche
-from GEST_MARCH.utils.fonction_util import controler_type_personne, demander_entier
+from GEST_MARCH.utils.fonction_util import controler_type_personne, demander_entier, demander_reel
 from GEST_MARCH.utils.table_titre import table_marchand_title, table_marche_title, table_utilisateur_title
 
 
@@ -18,13 +18,13 @@ def gestion_user():
       choix = input("Choisisser une option: ")
       
       if choix == "0": # Créer un utilisateur
-         nom = input("Entreez le nom de l'utilisateur : ")
+         nom = input("Entreez le nom de l'utilisateur : ").strip()
          contact = input("Entreez le contact de l'utilisateur : ")
          type_personne = controler_type_personne("type de personne (Client, Admin) : ")
          
          mots_passe = None
          if type_personne != "Marchand":
-            mots_passe = input("Entrez le mot de passe : ")
+            mots_passe = input("Entrez le mot de passe : ").strip()
          
          try:
             personne = Personne(
@@ -42,7 +42,7 @@ def gestion_user():
             rprint(f"[bold red]Une erreur s'est produite : {e}[/bold red]")
       
       elif choix == "1": # Créer un marcher
-         nom_marche = input("Entrez le nom du marché: ")
+         nom_marche = input("Entrez le nom du marché: ").strip()
          # en absence de coordonne X*Y nous prendrons 50*50
          x_ligne = demander_entier("Entrez le nombre de ligne: ")
          y_colonne = demander_entier("Entrez le nombre de colonne: ")
@@ -56,8 +56,8 @@ def gestion_user():
             
             try:
                uuid.UUID(marche_id)
-               nom = input("Entrez le nom du marchand: ")
-               contact = input("Entrez le contact du marchand: ")
+               nom = input("Entrez le nom du marchand: ").strip()
+               contact = input("Entrez le contact du marchand: ").strip()
                coordonneeX = demander_entier("Entrez la coordonnée X: ")
                coordonneeY = demander_entier("Entrez la coordonnée Y: ")
             
@@ -69,9 +69,9 @@ def gestion_user():
                   rprint("[yellow]Veuillez entrer uniquement 'O' pour Oui ou 'N' pour Non.[/yellow]")
                   
                while response == "O":
-                  produit = input("Entrez le nom du produits: ").strip()
-                  quantite = int(input("Quantiter totale a enregistrer: "))
-                  prix_unitaire = float(input("Quel est le prix unitaire de ce produits: "))
+                  produit = input("Entrez le nom du produits: ").strip().capitalize()
+                  quantite = demander_entier("Quantiter totale a enregistrer: ")
+                  prix_unitaire = demander_reel("Quel est le prix unitaire de ce produits: ")
                   
                   stock[produit] = {
                      'quantite': quantite,
@@ -131,7 +131,7 @@ def gestion_user():
          console.print(table)
       
       elif choix == "4": # Afficher les stands d'un marché
-         marche_id = input("Entrez l'ID du marché: ")
+         marche_id = input("Entrez l'ID du marché: ").strip()
          try:
             uuid.UUID(marche_id)
             
