@@ -9,6 +9,11 @@ nom:           KISSO Daniel
 type_personne: Client
 pass:          kisso
 
+ID:            36505ce0-f4af-4540-b724-58c42f9ece14
+nom:           MICHEL Jackson
+type_personne: Client
+pass:          Koliko450
+
 ------------------------ (il est a noté que certain marchand ont été créer sans stock)
 
 --> Marchand avec un stock

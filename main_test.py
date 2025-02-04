@@ -7,7 +7,7 @@ from GEST_MARCH.views.gestion_trannsactionSortie import gestion_transaction_sort
 from GEST_MARCH.views.gestion_transactionEntre import gestion_transaction_entree
 from rich import print as rprint
 
-def main():
+def main_test():
    type_personne = None  # Variable pour stocker le type de l'utilisateur connecté
    
    while type_personne is None:
@@ -25,6 +25,8 @@ def main():
    
    while True:
       section_menu(type_personne)
+      
+
       choix = input("\nChoisissez une option: ")
 
       if type_personne == "Admin":
@@ -63,7 +65,8 @@ def main():
             break
          else:
             rprint("[bold red]Option invalide, veuillez réessayer.[/bold red]")
-
+      
+   
 
 if __name__ == "__main__":
-   main()
+   main_test()

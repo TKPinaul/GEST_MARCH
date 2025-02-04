@@ -1,3 +1,43 @@
+from rich import print as rprint
+
+def welcome_menu():
+   rprint(
+   """
+   === Bienvenue ! Que puis-je faire pour vous ? ===
+   
+   0. Je suis un marchand
+   1. Je souhaite m'enregistrer en tant que client
+   2. J'ai un compte et je veux me connecter
+   """
+   )
+   
+def section_menu(type_personne):
+   """Affiche le menu en fonction du type d'utilisateur."""
+   print(f"""
+      === Menu Principal ({type_personne})===""")
+   
+   if type_personne == "Admin":
+      print(
+      """
+      0. Gestion des Utilisateurs
+      1. Accéder aux Marchés
+      2. Accéder aux fonctionnalités Marchand
+      3. Gestion des Transactions d'Entrée (rentrée de stock)
+      4. Gestion des Transactions de Sortie (sortie de stock)
+      5. Quitter""")
+   
+   elif type_personne == "Marchand":
+      print("""
+      0. Accéder aux Marchés
+      1. Accéder aux fonctionnalités Marchand
+      2. Quitter """)
+   
+   elif type_personne == "Client":
+      print("""
+      0. Accéder aux Marchés
+      1. Quitter """)
+   
+
 def users_menu():
    print(
       """
