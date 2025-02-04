@@ -4,6 +4,7 @@ from GEST_MARCH.views.gestion_marchand import gestion_marchand
 from GEST_MARCH.views.gestion_marche import gestion_marche
 from GEST_MARCH.views.gestion_perssonne import gestion_user
 from GEST_MARCH.views.gestion_trannsactionSortie import gestion_transaction_sortie
+from GEST_MARCH.views.gestion_transactionClient import gestion_transaction_client
 from GEST_MARCH.views.gestion_transactionEntre import gestion_transaction_entree
 from rich import print as rprint
 
@@ -59,6 +60,8 @@ def main():
          if choix == "0":
             gestion_marche()
          elif choix == "1":
+            gestion_transaction_client()
+         elif choix == "2":
             rprint("[bold yellow]Déconnexion en cours...[/bold yellow]\n")
             break
          else:

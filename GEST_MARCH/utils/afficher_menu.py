@@ -35,7 +35,8 @@ def section_menu(type_personne):
    elif type_personne == "Client":
       print("""
       0. Accéder aux Marchés
-      1. Quitter """)
+      1. Consulter le catalogue
+      2. Quitter """)
    
 
 def users_menu():
@@ -98,14 +99,26 @@ def transactionEntre_menu():
    """
    )
 
+def client_menu():
+   print(
+   """
+   === Gestion des transaction d'entre ===
+   0. Afficher la liste des marchands
+   1. Afficher les produits d'un marchants
+   2. Rechercher une liste de produit
+   3. Acheter un produit
+   4. Quitter
+   """
+   )
+   
 def transactionSortie_menu():
    print(
    """
    === Gestion des transaction d'entre ===
    0. Afficher la liste des marchands
-   1. Vendre un produit
-   2. Affichage des transactions de sorties
-   3. Affichage des transactions de sorties d'un marchand
+   1. Afficher des transactions de sorties
+   2. Afficher les transaction d'un client
+   3. Afficher des transactions de sorties d'un marchand
    4. Afficher les transactions d'entrée d'un produits
    5. Afficher les transactions ayant fais l'objet d'un montant minimum
    6. Afficher les transactions ayant fais l'objet d'un montant maximum

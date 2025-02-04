@@ -105,7 +105,37 @@ class Marchands(Personne):
          raise Exception(f"Erreur lors de la suppression du marchand : {e}")
       finally:
          db.client.close()
+   
+   @staticmethod
+   def recherche_produits(liste_produit):
+      """recherche une liste de produit dans tous les stock"""
+      marchands = Marchands.get_all()
       
+      if not marchands:
+         return []
+      
+      resultat = []
+      
+      for marchand_data in marchands:
+         marchand = Marchands.from_dict(marchand_data)
+         produits_trouves = []
+         
+         for produit in liste_produit:
+            for stock_produit, stock_info in marchand.stock.items():
+               if produit.lower() in stock_produit.lower():
+                  produits_trouves.append({
+                     "nom_produit": stock_produit,
+                     "quantite": stock_info.get("quantite", 0),
+                     "prix_unitaire": stock_info.get("prix_unitaire", "Non défini")
+                  })
+
+         if produits_trouves:
+            resultat.append({
+               "code_marchand": marchand.code_id,  # Correction de l’attribut
+               "nom_marchand": marchand.nom,
+               "produits": produits_trouves
+            })
+      return resultat
       
    @staticmethod
    def get_one(code_id):

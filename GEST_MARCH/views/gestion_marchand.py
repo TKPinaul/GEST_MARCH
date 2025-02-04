@@ -137,7 +137,7 @@ def gestion_marchand():
             console.print(table)
             
          except ValueError:
-            rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 4!).[/red]")
+            rprint("[red]ID du marchand est invalide. Veuillez entrer un id valide (consulter option 2!).[/red]")
       
       elif choix == "5": # Modifier les informations d'un marchand
          code_id = input("Entrez l'ID du marchand à modifier: ")

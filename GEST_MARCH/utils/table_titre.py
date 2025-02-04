@@ -59,5 +59,14 @@ def table_utilisateur_title():
    table.add_column("PROFIL", style="bright_red")
    return table
 
-
-
+# Affichage de la recherche du panier client
+def table_panier_title():
+   table = Table(title="Résultats de la recherche")
+   table.add_column("ID DU MARCHAND", style="green3", no_wrap=True)
+   table.add_column("NOM DU MARCHAND", style="bright_blue")
+   table.add_column("STAND", style="yellow")
+   table.add_column("PRODUITS", style="orange_red1")
+   table.add_column("QUANTITÉ EN STOCK", style="magenta")
+   table.add_column("PRIX UNITAIRE", style="bright_red")
+   table.add_column("MARCHÉ", style="bright_cyan")
+   return table
