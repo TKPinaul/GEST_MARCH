@@ -1,12 +1,31 @@
-
+------------------------ (quelque utilisateur)
 ID:            1aaa7468-ddc1-492e-8db0-19dc26b29272
 nom:           TIGER Jean
 type_personne: Admin
 pass:          admin
 
-------------------------
-
 ID:            237b932d-4381-40e2-87be-5cd3129dcb19
 nom:           KISSO Daniel
 type_personne: Client
 pass:          kisso
+
+------------------------ (il est a noté que certain marchand ont été créer sans stock)
+
+--> Marchand avec un stock
+
+WOLF Black 
+70726735-568f-466e-b4f3-cba7cf2b7e4c
+
+XENO Isac
+22cf826c-f760-4ec3-bcba-a123f1029ced
+
+xavier
+a66053e2-99f8-4b24-bdb2-ef33e7534044
+
+--> Marchand sans stock
+
+KUZO Cecilia
+aa3cdf54-f916-4dae-bded-8e7ca343f08b
+
+EMANUEL Gregori
+b491bbbc-3ea5-4a6c-a436-b9799a4633c5

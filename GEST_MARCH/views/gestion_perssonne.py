@@ -45,7 +45,7 @@ def gestion_user():
          nom_marche = input("Entrez le nom du marché: ")
          # en absence de coordonne X*Y nous prendrons 50*50
          x_ligne = demander_entier("Entrez le nombre de ligne: ")
-         y_colonne = demander_entier("Entrez le nombre de ligne: ")
+         y_colonne = demander_entier("Entrez le nombre de colonne: ")
          marche = Marche(nom_marche, x_ligne, y_colonne)
          marche.save() # Création du marché
          rprint('[green]Marché créé avec succès![/green]')
